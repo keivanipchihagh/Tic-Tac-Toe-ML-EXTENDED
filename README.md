@@ -4,8 +4,9 @@
 The goal is to create the game in a way that's unbeatable, so it requires some processing in the back-end section which might make the game run slow on poor internet connections. (Will be fixed in near future)
 
 ### Algorithms/Mthods I'm planning to use:
-- Random
-- Predefined
-- MiniMax
+- Pure randomnesd
+- Predefined moves
+- MiniMax algorithm
+- Decision Tree (Machine Learning, NOT RandomForest)
 - Neural Networks (Deep Learning)
 - Reinforcement Learning (Machine Learning)
