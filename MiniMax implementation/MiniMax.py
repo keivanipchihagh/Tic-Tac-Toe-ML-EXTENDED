@@ -128,12 +128,16 @@ class MiniMax:
         ''' Gets the best possible move using the algorithm '''
 
         # Set the board
-        self.board = board
+        self.board = board        
 
         best_score = -infinity        
         best_move = tuple()
 
         empty_cells = self.get_empty_cells()
+
+        # Choose random if it's the first move
+        if len(empty_cells) == 9:
+            return choice([0, 1, 2]), choice([0, 1, 2])
 
         for cell in empty_cells:
 
