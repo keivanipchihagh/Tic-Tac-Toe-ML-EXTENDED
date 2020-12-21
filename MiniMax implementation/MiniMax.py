@@ -19,17 +19,21 @@ class MiniMax:
 
         # Variables initialization
         self.board = None
+
         self.HUMAN = -1
+        self.HUMAN_score = -10
+
         self.AI = +1
+        self.AI_score = 10
 
 
     def evaluate(self):
         ''' Heuristic evaluation of game state. Rewards the AI if it wins '''
 
         if self.wins(self.AI) == +1:
-            return +1                       # Reward the AI if it outruns the opponent
+            return self.AI_score              # Reward the AI if it outruns the opponent
         elif self.wins(self.HUMAN) == -1:
-            return -1                       # Punish the AI if it is outran by the opponent
+            return self.HUMAN_score           # Punish the AI if it is outran by the opponent
         else:
             return 0                        # Draw
 
@@ -91,14 +95,14 @@ class MiniMax:
         empty_cells = self.get_empty_cells()
 
         # We have a winner, return it's score
-        if score in [-1, 1]:
+        if score in [self.AI_score, self.HUMAN_score]:
             return score
         # Draw?
         elif len(empty_cells) == 0:
             return 0
 
         # Set best score
-        best_score = -infinity if (player == self.AI) else +infinity
+        best_score = -10 if (player == self.AI) else +10
 
         for cell in empty_cells:
 
@@ -108,11 +112,11 @@ class MiniMax:
             # Temporarily set the move
             board[x][y] = player
 
-            # Recalculate best move by recursively going down the tree
+            # Recalculate best move by recursively going down the tree - To make our AI smarter we want to win faster so Depth is important here!
             if player == self.AI:
-                best_score = max(best_score, self.minimax(depth + 1, -player))
+                best_score = max(best_score, self.minimax(depth + 1, -player)) - depth
             else:
-                best_score = min(best_score, self.minimax(depth + 1, -player))
+                best_score = min(best_score, self.minimax(depth + 1, -player)) + depth
 
             # Reset the move back to it's original state
             board[x][y] = 0
@@ -126,7 +130,7 @@ class MiniMax:
         # Set the board
         self.board = board
 
-        best_score = -infinity
+        best_score = -infinity        
         best_move = tuple()
 
         empty_cells = self.get_empty_cells()
@@ -144,5 +148,5 @@ class MiniMax:
             # Compare to see if current move is better
             if move_score > best_score:
                 best_score, best_move = move_score, (x, y)
-
+        
         return best_move
