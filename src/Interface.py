@@ -9,6 +9,7 @@ Follow me for more (https://github.com/keivanipchihagh)
 
 # AI algorithm
 from MiniMax import MiniMax
+from Random import Random
 
 from os import system
 import platform
@@ -57,12 +58,14 @@ class TicTacToe:
 		while True:
 			user_input = int(input('Choose a cell (1-9): '))
 
-			if user_input in range(0, 10):
-				return ((user_input // 3) if (user_input % 3 != 0) else (user_input // 3 - 1), 2 if (user_input % 3 == 0) else (user_input % 3 - 1))
+			x, y = (user_input // 3) if (user_input % 3 != 0) else (user_input // 3 - 1), 2 if (user_input % 3 == 0) else (user_input % 3 - 1)
+
+			if [x, y] in self.get_empty_cells():
+				return (x, y)
 
 
-	def is_move_available(self):
-    		''' Returns whether board has any empty cells or not '''
+	def get_empty_cells(self):
+		''' Returns whether board has any empty cells or not '''
 
 		empty_cells = []
         
@@ -71,7 +74,13 @@ class TicTacToe:
 				if cell == 0:
 					empty_cells.append([x, y])
 
-		return len(empty_cells) != 0
+		return empty_cells
+
+
+	def is_move_available(self):
+		''' Returns whether board has any empty cells or not '''
+
+		return len(self.get_empty_cells()) != 0
 
 
 	def wins(self, AI, HUMAN):
@@ -121,7 +130,7 @@ class TicTacToe:
 			return True
 
 		elif not self.is_move_available():
-    		self.print()
+			self.print()
 			print('Draw!')
 			return True
 
@@ -160,7 +169,8 @@ def __main__():
 	tictactoe = TicTacToe(3)
 
 	# AI algorithm
-	algorithm = MiniMax()	
+	algorithm = MiniMax()
+	# algorithm = Random()
 
 	while True:
 		starting_user = input('Wanna start first? [y/n]: ')
