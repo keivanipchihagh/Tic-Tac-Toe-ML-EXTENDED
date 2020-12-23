@@ -14,6 +14,10 @@ from Random import Random
 from os import system
 import platform
 
+# For multi-threading purposes
+import os
+import threading
+
 
 class TicTacToe:
 	''' Tic Tac Toe Interface implementation '''
